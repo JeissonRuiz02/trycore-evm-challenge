@@ -37,3 +37,33 @@ def test_invalid_progress_raises_error():
     """Debe lanzar ValueError si el progreso está fuera del rango 0-1."""
     with pytest.raises(ValueError, match="Los porcentajes de avance deben estar entre 0 y 1"):
         EVMCalculator.calculate_metrics(1000, 1.5, 0.5, 500)
+
+
+class _Activity:
+    def __init__(self, bac, planned_progress, actual_progress, actual_cost):
+        self.bac = bac
+        self.planned_progress = planned_progress
+        self.actual_progress = actual_progress
+        self.actual_cost = actual_cost
+
+
+def test_project_metrics_empty():
+    metrics = EVMCalculator.calculate_project_metrics([])
+    assert metrics.pv == 0.0
+    assert metrics.ev == 0.0
+    assert metrics.cpi == 1.0
+    assert metrics.spi == 1.0
+
+
+def test_project_metrics_consolidates_activities():
+    activities = [
+        _Activity(1000, 0.5, 0.4, 500),
+        _Activity(1000, 0.5, 0.5, 500),
+    ]
+    metrics = EVMCalculator.calculate_project_metrics(activities)
+    assert metrics.pv == 1000.0
+    assert metrics.ev == 900.0
+    assert metrics.cv == -100.0
+    assert metrics.sv == -100.0
+    assert metrics.cpi == 0.9
+    assert metrics.spi == 0.9

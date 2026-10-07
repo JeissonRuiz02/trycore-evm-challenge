@@ -1,4 +1,6 @@
+from collections.abc import Sequence
 from dataclasses import dataclass
+from typing import Protocol
 
 @dataclass
 class EVMMetrics:
@@ -13,6 +15,13 @@ class EVMMetrics:
     vac: float
     status_cost: str
     status_schedule: str
+
+class ActivityEVMInput(Protocol):
+    bac: float
+    planned_progress: float
+    actual_progress: float
+    actual_cost: float
+
 
 class EVMCalculator:
     """
@@ -66,4 +75,23 @@ class EVMCalculator:
             vac=round(vac, 2) if vac != float('inf') else float('inf'),
             status_cost=status_cost,
             status_schedule=status_schedule
+        )
+
+    @staticmethod
+    def calculate_project_metrics(activities: Sequence[ActivityEVMInput]) -> EVMMetrics:
+        if not activities:
+            return EVMCalculator.calculate_metrics(0.0, 0.0, 0.0, 0.0)
+
+        bac = sum(activity.bac for activity in activities)
+        actual_cost = sum(activity.actual_cost for activity in activities)
+        planned_value = sum(
+            activity.planned_progress * activity.bac for activity in activities
+        )
+        earned_value = sum(
+            activity.actual_progress * activity.bac for activity in activities
+        )
+        planned_progress = planned_value / bac if bac > 0 else 0.0
+        actual_progress = earned_value / bac if bac > 0 else 0.0
+        return EVMCalculator.calculate_metrics(
+            bac, planned_progress, actual_progress, actual_cost
         )

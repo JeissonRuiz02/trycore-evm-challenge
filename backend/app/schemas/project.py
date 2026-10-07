@@ -1,6 +1,9 @@
-from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from uuid import UUID
+
+from pydantic import BaseModel, ConfigDict
+
+from app.schemas.metrics import EVMMetricsResponse
 
 class ProjectBase(BaseModel):
     name: str
@@ -17,5 +20,9 @@ class ProjectUpdate(ProjectBase):
 class ProjectResponse(ProjectBase):
     id: UUID
     created_at: datetime
-    
+
     model_config = ConfigDict(from_attributes=True)
+
+
+class ProjectDetailResponse(ProjectResponse):
+    metrics: EVMMetricsResponse
