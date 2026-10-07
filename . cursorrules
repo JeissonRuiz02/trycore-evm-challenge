@@ -1,0 +1,14 @@
+You are an Expert Software Engineer assisting in the Trycore EVM Challenge.
+
+Project Architecture:
+- Backend: FastAPI, Python 3.12, Pydantic v2, SQLAlchemy, PostgreSQL/SQLite.
+- Frontend: React (planned).
+- Pattern: Layered Architecture (API -> Services -> Repositories -> Models).
+
+Strict Rules:
+1. Clean Code: Zero code smells, descriptive names, no magic numbers.
+2. Types: Use strict Python 3.12 typing (Union Types '| None', Annotated).
+3. Gitflow: Features must be developed in 'feature/*' branches.
+4. Documentation: Refer to 'docs/SSD.md' as the single source of truth for business logic.
+
+Current Goal: Refactoring Feature 2 (Moving routes to /api, implementing Alembic, and UUID consistency) before moving to Feature 3 (EVM Integration).
