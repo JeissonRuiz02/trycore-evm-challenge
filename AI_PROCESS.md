@@ -1,6 +1,6 @@
 # AI_PROCESS.md
 
-Empecé el diseño en Ollama (plan, carpetas, SSD y el calculador). Después me pasé a Cursor: API, tests, Alembic, dashboard, PRs. Hoy `develop` tiene backend, frontend, README, OpenAPI, linter y el polish (PRs #1–#4). Falta `release/*` hacia `master`/`main` y el video.
+Empecé el diseño en Ollama (plan, carpetas, SSD y el calculador). Después me pasé a Cursor: API, tests, Alembic, dashboard, PRs. `develop` tiene backend, frontend, README, OpenAPI, linter y polish (PRs #1–#6). Cierre Gitflow: `release/0.1.0` → `main` (GitHub arrancó en `master`; producción es `main`). Falta el video.
 
 Este archivo lo actualicé cuando el código ya estaba casi listo. Debí escribirlo desde el día 1.
 
@@ -236,4 +236,4 @@ El frontend no es la fuente de verdad: pinta lo que devuelve la API. Lista de pr
 
 ## Qué haría distinto
 
-Escribir este archivo desde el día 1. Feature 2 también por PR. Renombrar `master` a `main` al arrancar. Postgres o Docker solo si sobraba tiempo, no como primer paso. Lo que sigue siendo entrega: rama `release/*` y el video (EVM en mis palabras, arquitectura, 1 proyecto y 3 actividades).
+Escribir este archivo desde el día 1. Feature 2 también por PR. Crear `main` al arrancar, no al final. Postgres o Docker solo si sobraba tiempo, no como primer paso. Lo que sigue siendo entrega: el video (EVM en mis palabras, arquitectura, 1 proyecto y 3 actividades).
