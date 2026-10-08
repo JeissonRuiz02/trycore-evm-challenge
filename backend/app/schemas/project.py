@@ -5,9 +5,11 @@ from pydantic import BaseModel, ConfigDict
 
 from app.schemas.metrics import EVMMetricsResponse
 
+
 class ProjectBase(BaseModel):
     name: str
     description: str | None = None
+
 
 class ProjectCreate(ProjectBase):
     pass

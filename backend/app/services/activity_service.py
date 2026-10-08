@@ -15,9 +15,7 @@ class ActivityService:
         self._activities = ActivityRepository(db)
         self._projects = ProjectRepository(db)
 
-    def create(
-        self, project_id: UUID, activity_data: ActivityCreate
-    ) -> ActivityResponse | None:
+    def create(self, project_id: UUID, activity_data: ActivityCreate) -> ActivityResponse | None:
         if not self._projects.get_by_id(project_id):
             return None
         activity = self._activities.create(project_id, activity_data)
@@ -27,13 +25,10 @@ class ActivityService:
         if not self._projects.get_by_id(project_id):
             return None
         return [
-            self._to_response(activity)
-            for activity in self._activities.get_by_project(project_id)
+            self._to_response(activity) for activity in self._activities.get_by_project(project_id)
         ]
 
-    def update(
-        self, activity_id: UUID, activity_data: ActivityUpdate
-    ) -> ActivityResponse | None:
+    def update(self, activity_id: UUID, activity_data: ActivityUpdate) -> ActivityResponse | None:
         activity = self._activities.update(activity_id, activity_data)
         if not activity:
             return None
