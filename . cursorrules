@@ -11,4 +11,4 @@ Strict Rules:
 3. Gitflow: Features must be developed in 'feature/*' branches.
 4. Documentation: Refer to 'docs/SSD.md' as the single source of truth for business logic.
 
-Current Goal: Delivery hardening (README, OpenAPI, tests, linter) then Feature 4 (React dashboard).
+Current Goal: Feature 4 (React dashboard) — project list, activity table, EVM summary, PV/EV/AC chart.
