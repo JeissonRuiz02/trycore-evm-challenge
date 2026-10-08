@@ -91,7 +91,7 @@ def test_create_list_update_and_delete_activity(client):
 def test_list_activities_returns_404_when_project_missing(client):
     response = client.get(f"/projects/{uuid4()}/activities")
     assert response.status_code == 404
-    assert response.json()["detail"] == "Project not found"
+    assert response.json()["detail"] == "Proyecto no encontrado"
 
 
 def test_create_activity_returns_404_when_project_missing(client):

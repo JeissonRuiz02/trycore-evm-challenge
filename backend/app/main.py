@@ -7,9 +7,9 @@ from app.api import api_router
 app = FastAPI(
     title="Trycore EVM Tool API",
     description=(
-        "REST API for project and activity tracking using Earned Value Management. "
-        "Metrics (PV, EV, CV, SV, CPI, SPI, EAC, VAC) are calculated on read/update, "
-        "not stored. CPI/SPI status is returned under `metrics.status`."
+        "API REST para seguimiento de proyectos y actividades con Valor Ganado (EVM). "
+        "Las métricas (PV, EV, CV, SV, CPI, SPI, EAC, VAC) se calculan al consultar o actualizar, "
+        "no se persisten. El estado de CPI/SPI va en `metrics.status`."
     ),
     version="0.1.0",
     docs_url="/swagger-ui",

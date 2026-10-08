@@ -5,8 +5,6 @@ from typing import Protocol
 
 @dataclass
 class EVMMetrics:
-    """Objeto de transferencia de datos para las métricas de EVM."""
-
     pv: float
     ev: float
     cv: float
@@ -36,28 +34,21 @@ class EVMCalculator:
     def calculate_metrics(
         bac: float, planned_progress: float, actual_progress: float, actual_cost: float
     ) -> EVMMetrics:
-        # 1. Validaciones de entrada (Evitar datos inconsistentes)
         if not (0 <= planned_progress <= 1) or not (0 <= actual_progress <= 1):
             raise ValueError("Los porcentajes de avance deben estar entre 0 y 1 (ej: 0.5 para 50%)")
 
         if bac < 0 or actual_cost < 0:
             raise ValueError("El presupuesto (BAC) y el costo real (AC) no pueden ser negativos")
 
-        # 2. Métricas Fundamentales
         pv = planned_progress * bac
         ev = actual_progress * bac
         cv = ev - actual_cost
         sv = ev - pv
 
-        # 3. Índices de Desempeño (Manejo de División por Cero)
-        # CPI = EV / AC. Si AC es 0, evaluamos si hubo progreso.
+        # AC=0 y EV=0 → CPI=1. AC=0 y EV>0 → infinito (JSON lo serializa como null).
         cpi = ev / actual_cost if actual_cost > 0 else (1.0 if ev == 0 else float("inf"))
-
-        # SPI = EV / PV. Si PV es 0, evaluamos si hubo progreso.
         spi = ev / pv if pv > 0 else (1.0 if ev == 0 else float("inf"))
 
-        # 4. Proyecciones (Forecasting)
-        # EAC = BAC / CPI. Manejamos casos donde CPI sea 0 o infinito.
         if 0 < cpi != float("inf"):
             eac = bac / cpi
         else:
@@ -65,7 +56,7 @@ class EVMCalculator:
 
         vac = bac - eac
 
-        # 5. Interpretaciones Humanas
+        # El JSON del SSD usa estas etiquetas en inglés.
         status_cost = "Under Budget" if cpi >= 1.0 else "Over Budget"
         status_schedule = "On Track/Ahead" if spi >= 1.0 else "Behind Schedule"
 
@@ -84,6 +75,7 @@ class EVMCalculator:
 
     @staticmethod
     def calculate_project_metrics(activities: Sequence[ActivityEVMInput]) -> EVMMetrics:
+        """Consolida por suma de BAC, PV, EV y AC (no promedia los CPI)."""
         if not activities:
             return EVMCalculator.calculate_metrics(0.0, 0.0, 0.0, 0.0)
 

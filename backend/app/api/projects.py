@@ -3,7 +3,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
 
 from app.api.deps import get_project_service
-from app.api.errors import NOT_FOUND_PROJECT, VALIDATION_ERROR
+from app.api.errors import DETAIL_PROJECT_NOT_FOUND, NOT_FOUND_PROJECT, VALIDATION_ERROR
 from app.schemas.project import (
     ProjectCreate,
     ProjectDetailResponse,
@@ -19,8 +19,8 @@ router = APIRouter(prefix="/projects", tags=["projects"])
     "",
     response_model=ProjectResponse,
     status_code=201,
-    summary="Create project",
-    description="Creates a project. Metrics are not included until the project is fetched by id.",
+    summary="Crear proyecto",
+    description="Crea un proyecto. Las métricas se calculan al consultar el detalle por id.",
     responses=VALIDATION_ERROR,
 )
 def create_project(
@@ -33,8 +33,8 @@ def create_project(
 @router.get(
     "",
     response_model=list[ProjectResponse],
-    summary="List projects",
-    description="Returns all projects without consolidated EVM metrics.",
+    summary="Listar proyectos",
+    description="Lista todos los proyectos, sin métricas consolidadas.",
 )
 def read_projects(service: ProjectService = Depends(get_project_service)):
     return service.get_all()
@@ -43,8 +43,8 @@ def read_projects(service: ProjectService = Depends(get_project_service)):
 @router.get(
     "/{project_id}",
     response_model=ProjectDetailResponse,
-    summary="Get project with EVM metrics",
-    description="Returns the project and consolidated metrics across its activities.",
+    summary="Detalle de proyecto con métricas EVM",
+    description="Devuelve el proyecto y las métricas consolidadas de sus actividades.",
     responses=NOT_FOUND_PROJECT,
 )
 def read_project(
@@ -53,15 +53,15 @@ def read_project(
 ):
     project = service.get_detail(project_id)
     if not project:
-        raise HTTPException(status_code=404, detail="Project not found")
+        raise HTTPException(status_code=404, detail=DETAIL_PROJECT_NOT_FOUND)
     return project
 
 
 @router.put(
     "/{project_id}",
     response_model=ProjectResponse,
-    summary="Update project",
-    description="Replaces name and description. Does not change activities.",
+    summary="Actualizar proyecto",
+    description="Reemplaza nombre y descripción. No modifica las actividades.",
     responses={**NOT_FOUND_PROJECT, **VALIDATION_ERROR},
 )
 def update_project(
@@ -71,15 +71,15 @@ def update_project(
 ):
     updated = service.update(project_id, project)
     if not updated:
-        raise HTTPException(status_code=404, detail="Project not found")
+        raise HTTPException(status_code=404, detail=DETAIL_PROJECT_NOT_FOUND)
     return updated
 
 
 @router.delete(
     "/{project_id}",
     status_code=204,
-    summary="Delete project",
-    description="Deletes the project and its activities.",
+    summary="Eliminar proyecto",
+    description="Elimina el proyecto y sus actividades.",
     responses=NOT_FOUND_PROJECT,
 )
 def delete_project(
@@ -87,4 +87,4 @@ def delete_project(
     service: ProjectService = Depends(get_project_service),
 ):
     if not service.delete(project_id):
-        raise HTTPException(status_code=404, detail="Project not found")
+        raise HTTPException(status_code=404, detail=DETAIL_PROJECT_NOT_FOUND)
