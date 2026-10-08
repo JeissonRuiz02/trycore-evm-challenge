@@ -5,7 +5,6 @@ from sqlalchemy.exc import IntegrityError
 
 from app.models.activity import Activity
 
-
 PROJECT_PAYLOAD = {"name": "Alpha", "description": "Demo project"}
 ACTIVITY_PAYLOAD = {
     "name": "Foundation",
@@ -50,10 +49,13 @@ def test_get_update_and_delete_project(client):
 def test_project_not_found(client):
     missing = uuid4()
     assert client.get(f"/projects/{missing}").status_code == 404
-    assert client.put(
-        f"/projects/{missing}",
-        json=PROJECT_PAYLOAD,
-    ).status_code == 404
+    assert (
+        client.put(
+            f"/projects/{missing}",
+            json=PROJECT_PAYLOAD,
+        ).status_code
+        == 404
+    )
     assert client.delete(f"/projects/{missing}").status_code == 404
 
 
@@ -102,10 +104,13 @@ def test_create_activity_returns_404_when_project_missing(client):
 
 def test_activity_not_found(client):
     missing = uuid4()
-    assert client.put(
-        f"/activities/{missing}",
-        json=ACTIVITY_PAYLOAD,
-    ).status_code == 404
+    assert (
+        client.put(
+            f"/activities/{missing}",
+            json=ACTIVITY_PAYLOAD,
+        ).status_code
+        == 404
+    )
     assert client.delete(f"/activities/{missing}").status_code == 404
 
 
@@ -127,10 +132,13 @@ def test_delete_project_removes_activities(client):
 
     assert client.delete(f"/projects/{project_id}").status_code == 204
     assert client.get(f"/projects/{project_id}/activities").status_code == 404
-    assert client.put(
-        f"/activities/{activity_id}",
-        json=ACTIVITY_PAYLOAD,
-    ).status_code == 404
+    assert (
+        client.put(
+            f"/activities/{activity_id}",
+            json=ACTIVITY_PAYLOAD,
+        ).status_code
+        == 404
+    )
 
 
 def test_sqlite_rejects_activity_without_project(db_session):
