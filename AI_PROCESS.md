@@ -1,6 +1,8 @@
 # AI_PROCESS.md
 
-Empecé el diseño en Ollama (plan, carpetas, SSD y el calculador). Después me pasé a Cursor para seguir sobre el repo: API, tests, Alembic y el PR. Hoy el backend está en `develop` (PR #1). Falta frontend, README y el video.
+Empecé el diseño en Ollama (plan, carpetas, SSD y el calculador). Después me pasé a Cursor: API, tests, Alembic, dashboard, PRs. Hoy `develop` tiene backend, frontend, README, OpenAPI, linter y el polish (PRs #1–#4). Falta `release/*` hacia `master`/`main` y el video.
+
+Este archivo lo actualicé cuando el código ya estaba casi listo. Debí escribirlo desde el día 1.
 
 ## Herramientas
 
@@ -26,6 +28,8 @@ BAC 1000, planificado 50%, real 40%, costo 500.
 - VAC = -250
 
 Ese mismo caso está en los tests. Si AC y EV son 0, CPI = 1 (para no dividir por cero). El consolidado del proyecto no es el promedio de los CPI: sumo BAC, PV, EV y AC y vuelvo a aplicar las fórmulas. Lo probé con dos actividades y me dio PV 1000, EV 900, CPI 0.9.
+
+El PDF dice que CPI > 1 es eficiente. El SSD y el código usan ≥ 1 (CPI = 1 = On Track / Under Budget). Lo dejé así para no pelear con el contrato JSON del SSD.
 
 ## Prompts (en orden)
 
@@ -158,17 +162,69 @@ y a nivel de los demas requerimientos? @AI_PROCESS.md  y demas?
 me ayudarias a llenarlo con base aa lo que hemos hablado y a esto que fue con lo que inicie en ollama como base?
 ```
 
+(Pegó el dump de Ollama: el prompt inicial del SSD y la respuesta larga del modelo.)
+
+```
+El todo, algunas cosas y demas se ven muy IA toma ejemplo de como te excribo, se un poco mas resumido. elimina copsas que tal vez se vean mal o sean redundantes por favor
+```
+
+```
+que mas podemos dejar listo o adelantar en esta fase?
+```
+
+(Iba pegado el checklist de entregables del PDF.)
+
+```
+ya lo reinicie, realizando un check list, que tenemos a la fecha?
+```
+
+```
+perfecto, hagamoslo siguiendo la estructura segun lo planificado
+```
+
+```
+Perfecto, revisa los dos proyectos a nivel de arquitectura, se alinea con lo planeado en el SSD y con los requerimientos? te anexo nuevamente el documento
+```
+
+```
+Mergueemos los PRs por favor
+```
+
+```
+algun ajuste, refeactor que podemos hacer con lo del .gitignore adicional? consideras oportuno poner docstrings en el codigo para buenas practicas? algo mirar para pulir? mirar que no tengamos comrtarios en ingles y luego en español etc ...
+```
+
+```
+si, realicemos el commit y PR a develop si consideras que todo deberia ir asi
+```
+
+```
+Como estamos a nivel de cumplimiento?
+```
+
+```
+hagamos primero esto:
+
+ mergear #4 → actualizar AI_PROCESS
+```
+
+También pedí corregir el 404 de actividades, tests HTTP, `datetime.utcnow` y `PRAGMA foreign_keys=ON`. Y anexé el PDF de la vacante (agentes/MCP/RPA) para ver cómo encajaba: no metí agentes en el producto; el proceso con IA va en este archivo.
+
+No copié cada “ok” ni adjuntos de terminal. El hilo está en Cursor; estos son los que movieron una decisión.
+
 ## Donde no seguí a la IA
 
 **1. Postgres + Docker.** Ollama lo daba por hecho. Usé SQLite + Alembic. La prueba es corta y tiene que correr fácil. El PDF pide una DB relacional, no obliga Postgres. Si hace falta, se cambia la URL.
 
-**2. Merge local vs PR.** Ollama cerraba features con `git merge` a `develop`. En Feature 2 hice eso. El PDF pide PR aunque trabaje solo. Feature 3 la cerré con el PR #1 en GitHub.
+**2. Merge local vs PR.** Ollama cerraba features con `git merge` a `develop`. En Feature 2 (`api-base`) hice eso, sin PR. El PDF pide PR aunque trabaje solo. A partir de Feature 3 usé PRs en GitHub (#1 métricas, #2 README/OpenAPI/tests, #3 dashboard, #4 polish).
 
 Tampoco usé el patrón Strategy que sugería Ollama para el EAC. Con una clase de cálculo alcanza y se testea más fácil.
 
+**3. Docstrings en todo.** En el polish la IA podía haber documentado cada CRUD. No: nombres + SSD alcanzan. Docstring solo donde hay una decisión (rollup del proyecto = suma, no promedio de CPI).
+
 ## Cómo comprobé los números
 
-A mano el ejemplo de 1000 / 50% / 40% / 500. Los tests esperan esos mismos valores. Proyecto sin actividades: CPI y SPI en 1. `PUT` de una actividad recalcula; el detalle del proyecto consolida.
+A mano el ejemplo de 1000 / 50% / 40% / 500. Los tests esperan esos mismos valores. Proyecto sin actividades: CPI y SPI en 1. Avance real = 0 entra en los tests. `PUT` de una actividad recalcula; el detalle del proyecto consolida. El dashboard lo revisé creando un proyecto y actividades y mirando semáforo y gráfica, no solo el JSON.
 
 ## Arquitectura
 
@@ -176,7 +232,8 @@ Ollama armó el monorepo (backend / frontend / docs). Yo dejé el SSD en `/docs`
 
 Al montar la API, `models/project.py` tenía schemas Pydantic en vez del modelo ORM. Eso lo corregimos: el modelo es SQLAlchemy, los schemas se quedan en `schemas/`.
 
+El frontend no es la fuente de verdad: pinta lo que devuelve la API. Lista de proyectos hace un GET de detalle por fila para el semáforo (GET `/projects` no trae métricas; el SSD lo deja así).
+
 ## Qué haría distinto
 
-Escribir este archivo desde el día 1. Feature 2 también por PR. Falta frontend, README, tests más completos (avance real = 0, un test por endpoint), y al final `release` hacia `main` (ahora la rama se llama `master`) + el video.
-
+Escribir este archivo desde el día 1. Feature 2 también por PR. Renombrar `master` a `main` al arrancar. Postgres o Docker solo si sobraba tiempo, no como primer paso. Lo que sigue siendo entrega: rama `release/*` y el video (EVM en mis palabras, arquitectura, 1 proyecto y 3 actividades).
