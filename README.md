@@ -1,13 +1,12 @@
 # Trycore EVM Tool
 
-API para registrar proyectos y actividades y calcular indicadores de Valor Ganado (EVM).
-
-El frontend todavía no está. Mientras tanto puedes usar la API y Swagger.
+API y dashboard para registrar proyectos y actividades y ver indicadores de Valor Ganado (EVM).
 
 ## Requisitos
 
 - Python 3.12
 - [Poetry](https://python-poetry.org/)
+- Node.js 20+
 
 La base de datos de desarrollo es **SQLite** (`backend/evm_project.db`) para poder correr el proyecto sin instalar Postgres. El esquema se aplica con Alembic.
 
@@ -42,6 +41,19 @@ poetry run uvicorn app.main:app --reload
 - Swagger: http://127.0.0.1:8000/swagger-ui
 - Alias: http://127.0.0.1:8000/api-docs
 - OpenAPI JSON: http://127.0.0.1:8000/openapi.json
+
+## Correr el dashboard
+
+En otra terminal, con la API ya levantada:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+- UI: http://127.0.0.1:5173
+- La UI llama a `http://127.0.0.1:8000` (CORS ya está abierto para 5173).
 
 ## Tests
 
