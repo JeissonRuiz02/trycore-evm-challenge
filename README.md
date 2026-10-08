@@ -10,6 +10,8 @@ API y dashboard para registrar proyectos y actividades y ver indicadores de Valo
 
 La base de datos de desarrollo es **SQLite** (`backend/evm_project.db`) para poder correr el proyecto sin instalar Postgres. El esquema se aplica con Alembic.
 
+Para usar PostgreSQL más adelante: instala el driver (`poetry add psycopg2-binary`), apunta `SQLALCHEMY_DATABASE_URL` a `postgresql://user:password@localhost:5432/evm` (ver `backend/.env.example`) y vuelve a correr `alembic upgrade head`. El código no depende de un motor concreto más allá de SQLAlchemy.
+
 ## Setup
 
 ```bash
