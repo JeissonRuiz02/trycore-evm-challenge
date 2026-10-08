@@ -75,7 +75,7 @@ poetry run black --check backend/app backend/tests
 
 ## Flujo git
 
-Trabajo en `feature/*`, integración en `develop`, PRs hacia `develop`. `master` es el commit inicial (equivalente a `main` en el PDF).
+Gitflow: `feature/*` se integra a `develop` con PR. La entrega a producción sale por `release/*` hacia `main`. `master` es la rama inicial de GitHub (commit de arranque); no se usa como producción.
 
 ## Documentos
 
