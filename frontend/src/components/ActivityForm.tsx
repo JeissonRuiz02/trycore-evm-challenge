@@ -39,6 +39,13 @@ export function ActivityForm({
         actual_progress: fromPercentInput(actual),
         actual_cost: Number(cost),
       });
+      if (!initial) {
+        setName("");
+        setBac("");
+        setPlanned("");
+        setActual("");
+        setCost("");
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "No se pudo guardar");
     } finally {
