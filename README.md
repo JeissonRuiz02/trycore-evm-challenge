@@ -36,36 +36,11 @@ Guarda las PNG (o JPG) en [`docs/screenshots/`](docs/screenshots/) con **estos n
 
 | Archivo | Qué fotografiar |
 | :--- | :--- |
-| `01-lista.png` | Home: semáforo y estados en español |
-| `02-detalle.png` | Consolidado, gráfica PV / EV / AC y tabla |
-| `03-formulario.png` | Alta o edición de una actividad |
-| `04-swagger.png` | `/swagger-ui` con un endpoint abierto |
-| `05-gitflow.png` | (Opcional) PRs a `develop` y `release/0.1.0` → `main` |
-
-<p align="center">
-  <strong>Lista de proyectos</strong><br>
-  <img src="docs/screenshots/01-lista.png" alt="Lista de proyectos con semáforo" width="860">
-</p>
-
-<p align="center">
-  <strong>Detalle: consolidado y gráfica</strong><br>
-  <img src="docs/screenshots/02-detalle.png" alt="Detalle de proyecto con métricas EVM" width="860">
-</p>
-
-<p align="center">
-  <strong>Carga de actividad</strong><br>
-  <img src="docs/screenshots/03-formulario.png" alt="Formulario de actividad" width="860">
-</p>
-
-<p align="center">
-  <strong>Contrato OpenAPI</strong><br>
-  <img src="docs/screenshots/04-swagger.png" alt="Swagger UI" width="860">
-</p>
-
-<p align="center">
-  <strong>Historial Gitflow</strong><br>
-  <img src="docs/screenshots/05-gitflow.png" alt="Pull requests y release" width="860">
-</p>
+| <img width="1373" height="769" alt="image" src="https://github.com/user-attachments/assets/d1b4d199-d7c7-4d67-a988-6db92640e6bf" />  | Home: semáforo y estados en español |
+| <img width="1172" height="1137" alt="image" src="https://github.com/user-attachments/assets/b7154628-5569-447c-8c0c-7fd0e14c91c8" /> | Consolidado, gráfica PV / EV / AC y tabla |
+| <img width="991" height="394" alt="image" src="https://github.com/user-attachments/assets/3b0f0257-abc9-4c47-abc4-730e698da560" /> | Alta o edición de una actividad |
+| <img width="1516" height="1222" alt="image" src="https://github.com/user-attachments/assets/f525fe17-11ab-4aad-8f07-333d10790ad6" /> | `/swagger-ui` con un endpoint abierto |
+| <img width="1549" height="876" alt="image" src="https://github.com/user-attachments/assets/360bc6f4-e893-480a-a9ac-7059ca09f7c9" /> | PRs a `develop` y `release/0.1.0` → `main` |
 
 ---
 

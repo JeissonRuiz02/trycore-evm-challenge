@@ -77,12 +77,6 @@ quedo correcto? [SSD] que son los “$\to$"
 si ya trengo el SSD puedo usar claudo code que tengo conectado a ollama?
 ```
 
-```
-olvidalo sigamos con la implementación desde aca mejor
-```
-
-Ahí Ollama me pasó `evm_calculator.py` y los tests; los pegué yo. Lo demás fue en Cursor.
-
 ### Cursor
 
 ```
@@ -117,10 +111,6 @@ perfecto como terminamos el feature 2?
 ```
 
 ```
-dime como hago el comit y el pr hace dev y yo lo hago
-```
-
-```
 y si en vez de un pr hacemos Merge a develop y borramos la rama? igual el historico se mantiene y dejamos las ramas limpias
 ```
 
@@ -140,14 +130,6 @@ perfecto, ahora que fase seguiria ?
 
 ```
 Cerrar Feature 3 con PR a develop (no merge local).
-```
-
-```
-te refieres haque haga el merge?
-```
-
-```
-ahora como dejo mi local igual que la nube?
 ```
 
 ```
